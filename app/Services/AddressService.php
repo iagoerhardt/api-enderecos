@@ -2,12 +2,19 @@
 
 namespace App\Services;
 
+use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AddressService
 {
-    public function index()
+        /**
+     * Display a listing of the resource.
+     *
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function index() : JsonResponse
     {
         try {
 
@@ -21,9 +28,9 @@ class AddressService
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function create() : JsonResponse
     {
         try {
             $address = new Address();
@@ -36,10 +43,10 @@ class AddressService
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Illuminate\Foundation\Http\FormRequest  $request
+     * @return Illuminate\Http\JsonResponse
      */
-    public function store($request)
+    public function store(AddressRequest $request) : JsonResponse
     {
         try {
             $address = Address::create($request->all());
@@ -53,9 +60,9 @@ class AddressService
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(int $id) : JsonResponse
     {
         try {
             $address = Address::find($id);
@@ -69,9 +76,9 @@ class AddressService
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\JsonResponse
      */
-    public function edit($id)
+    public function edit(int $id) : JsonResponse
     {
         try {
             $address = Address::find($id);
@@ -84,11 +91,11 @@ class AddressService
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Illuminate\Foundation\Http\FormRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\JsonResponse
      */
-    public function update($request, $id)
+    public function update(AddressRequest $request, int $id) : JsonResponse
     {
         try {
             $address = Address::find($id);
@@ -103,9 +110,9 @@ class AddressService
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy( int $id) : JsonResponse
     {
         try {
             $address = Address::find($id);
@@ -165,9 +172,9 @@ class AddressService
      * Traduz o endereço para o inglês
      *
      * @param  object  $address
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    private function traduzEndereco($address)
+    private function traduzEndereco(object $address) : array
     {
         //Traduz campos do array
         $addressEn = [
@@ -185,8 +192,9 @@ class AddressService
      *
      * @param  string  $logradouro
      * @return \Illuminate\Http\Response
+
      */
-    public function buscaLogradouro($logradouro = null)
+    public function buscaLogradouro( string $logradouro = null) : JsonResponse
     {
         try {
             if (is_null($logradouro)) {
