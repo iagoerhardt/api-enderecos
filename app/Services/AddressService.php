@@ -150,9 +150,9 @@ class AddressService
      * Busca externa via API
      *
      * @param  int  $cep
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    private function buscaExterna($cep)
+    private function buscaExterna(int $cep) : array
     {
         $url = "https://viacep.com.br/ws/$cep/json/";
         $ch = curl_init();
