@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Address;
 use Illuminate\Http\Request;
+use App\Services\AddressService;
 
 class AddressController extends Controller
 {
+    protected $service;
+
+    public function __construct(AddressService $service)
+    {
+        //Separando as regras de negócio da camada de controller
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +22,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $adresses = Address::all();
-        return response()->json($adresses);
+        $request = $this->service->index();
+        return $request;
     }
 
     /**
@@ -25,8 +33,8 @@ class AddressController extends Controller
      */
     public function create()
     {
-        $address = new Address();
-        return response()->json($address);
+        $request = $this->service->create();
+        return $request;
     }
 
     /**
@@ -37,8 +45,8 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        $address = Address::create($request->all());
-        return response()->json($address);
+        $request = $this->service->store($request);
+        return $request;
     }
 
     /**
@@ -49,8 +57,8 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        $address = Address::find($id);
-        return response()->json($address);
+        $request = $this->service->show($id);
+        return $request;
     }
 
     /**
@@ -61,8 +69,8 @@ class AddressController extends Controller
      */
     public function edit($id)
     {
-        $address = Address::find($id);
-        return response()->json($address);
+        $request = $this->service->edit($id);
+        return $request;
     }
 
     /**
@@ -74,9 +82,8 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $address = Address::find($id);
-        $address->update($request->all());
-        return response()->json($address);
+        $request = $this->service->update($request, $id);
+        return $request;
     }
 
     /**
@@ -87,8 +94,31 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        $address = Address::find($id);
-        $address->delete();
-        return response()->json($address);
+        $request = $this->service->destroy($id);
+        return $request;
+    }
+
+    /**
+     * Busca por CEP
+     *
+     * @param  int  $cep
+     * @return \Illuminate\Http\Response
+     */
+    public function busca($cep)
+    {
+        $request = $this->service->busca($cep);
+        return $request;
+    }
+
+    /**
+     * Busca por logradouro
+     *
+     * @param  int  $street
+     * @return \Illuminate\Http\Response
+     */
+    public function buscaLogradouro($logradouro = null)
+    {
+        $request = $this->service->buscaLogradouro($logradouro);
+        return $request;
     }
 }

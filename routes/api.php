@@ -21,3 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Controle dos endereços
 Route::apiResource('enderecos', AddressController::class);
+
+//Busca por CEP
+Route::get('/enderecos/busca-cep/{cep}', AddressController::class.'@busca');
+
+//Busca por logradouro
+Route::get('/busca-enderecos/rua/{street?}', AddressController::class.'@buscaLogradouro');
